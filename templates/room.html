@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>room</title>
+</head>
+<body>
+Имя комнаты - {{ room_name }}
+
+<p id="lastMessage"></p>
+
+<input type="text" id="sendMessageInput" placeholder="Отправить сообщение">
+
+<script>
+    {#let webSocket = new WebSocket('ws://' + window.location.host + '/ws/room/{{ room_name }}/');#}
+
+    const webSocket = new WebSocket(
+            'ws://'
+            + window.location.host
+            + '/ws/room/'
+            + 'ref'
+            + '/'
+        );
+
+    webSocket.onmessage = function(message) {
+        document.querySelector("#lastMessage").textContent = message;
+        {#var data = JSON.parse(message.data)#}
+        {#msgArea.append('<p><strong>'+ data.sender + '</strong>: ' + data.message + '</p>')#}
+    }
+
+    document.querySelector("#sendMessageInput").onkeyup = function(e) {
+        if (e.keyCode === 13) {
+            console.log("Отправлено")
+            webSocket.send(document.querySelector("#sendMessageInput").value)
+        }
+    };
+
+
+
+
+
+</script>
+</body>
+</html>

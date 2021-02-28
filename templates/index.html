@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>main</title>
+</head>
+<body>
+
+<h2>Имя комнаты:</h2>
+<input id="main_room_name" type="text" placeholder="Пиши тут">
+
+<script>
+    document.querySelector('#main_room_name').onkeyup = function(input) {
+            if (input.keyCode === 13) {  // enter, return
+                window.location = window.origin + `/room/${document.querySelector('#main_room_name').value}`
+            }
+        };
+</script>
+
+</body>
+</html>
