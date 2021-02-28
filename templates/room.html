@@ -12,20 +12,14 @@
 <input type="text" id="sendMessageInput" placeholder="Отправить сообщение">
 
 <script>
-    {#let webSocket = new WebSocket('ws://' + window.location.host + '/ws/room/{{ room_name }}/');#}
 
-    const webSocket = new WebSocket(
-            'ws://'
-            + window.location.host
-            + '/ws/room/'
-            + 'ref'
-            + '/'
-        );
+    const webSocket = new WebSocket('ws://127.0.0.1:8000/ws/rooms/');
 
     webSocket.onmessage = function(message) {
-        document.querySelector("#lastMessage").textContent = message;
-        {#var data = JSON.parse(message.data)#}
-        {#msgArea.append('<p><strong>'+ data.sender + '</strong>: ' + data.message + '</p>')#}
+        let data = JSON.parse(message.data);
+
+        document.querySelector("#lastMessage").textContent = data.message;
+
     }
 
     document.querySelector("#sendMessageInput").onkeyup = function(e) {
@@ -34,9 +28,6 @@
             webSocket.send(document.querySelector("#sendMessageInput").value)
         }
     };
-
-
-
 
 
 </script>
